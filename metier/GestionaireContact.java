@@ -25,16 +25,27 @@ public class GestionaireContact {
         }
         return "Contact: " + nom + " nom trouvé";
     }
+    
+    private boolean verifierCatactVide(String nom){
+        return !nom.trim().isEmpty() ? true : false;
+    }
 
     public void modifierContact(String nomActuel ,String nom, String email, String telephone ) {
+        if (!verifierCatactVide(nomActuel)) {
+            System.out.println("Contact: nom vide");
+            return;
+        }
         for(Contact contact: contacts) {
             if (nomActuel.equals(contact.getNom())) {
-                if(nom != null) {
+                if (verifierCatactVide(nom)) {
                     contact.setNom(nom);
                 }
-                contact.setNom(nom);    
-                contact.setEmail(email);
-                contact.setTelephone(telephone);
+                if (verifierCatactVide(email)) {
+                    contact.setEmail(email); 
+                }
+                if (verifierCatactVide(telephone)) {
+                    contact.setTelephone(telephone);
+                }
                 System.out.println("Contact: modifié");
             } else {
 

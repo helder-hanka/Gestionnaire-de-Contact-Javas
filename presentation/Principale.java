@@ -11,23 +11,23 @@ public class Principale {
 
         // Ajouter des contacts
         gestionaireContact.ajoutContact("Emanuel", "emanuel@gmail.com", "003030300202");
-        gestionaireContact.ajoutContact("Nani", "Nani@gmail.com", "003030300202");
-        gestionaireContact.ajoutContact("Lola", "Lola@gmail.com", "003030300202");
+        // gestionaireContact.ajoutContact("Nani", "Nani@gmail.com", "003030300202");
+        // gestionaireContact.ajoutContact("Lola", "Lola@gmail.com", "003030300202");
 
         // Afficher les contacts
         gestionaireContact.afficherContacts();
 
         // Rechercher un contact
-        System.out.println(gestionaireContact.rechercheContact("Emanuel"));
+        // System.out.println(gestionaireContact.rechercheContact("Emanuel"));
 
         // Modifier un contact
-        gestionaireContact.modifierContact("Emanuel", "Sandrine", "sandrine@g.com", "003030300209");
+        gestionaireContact.modifierContact("", "Sandrine", "sandrine@g.com", "02");
         
-         System.out.println(gestionaireContact.rechercheContact("Sandrine"));
+         System.out.println(gestionaireContact.rechercheContact("Emanuel"));
 
         // Supprimer un contact
-        gestionaireContact.supprimerContact("Sandrine");
-        System.out.println(gestionaireContact.rechercheContact("Sandrine"));
+        // gestionaireContact.supprimerContact("Nani");
+        // System.out.println(gestionaireContact.rechercheContact("Sandrine"));
     }
   
 }
