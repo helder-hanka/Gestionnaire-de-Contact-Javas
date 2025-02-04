@@ -21,7 +21,7 @@ public class Contact {
     return this.telephone;
    }
 
-   public void SetNom(String nom) {
+   public void setNom(String nom) {
     this.nom = nom;
    }
    public void setEmail(String email) {
@@ -31,7 +31,7 @@ public class Contact {
     this.telephone = telephone;
    }
 
-   public String ToString(){
+   public String toString(){
     return "Nom: "+this.nom+" Email: "+this.email+" Telephone: "+this.telephone;
    }
 }
