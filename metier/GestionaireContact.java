@@ -1,8 +1,10 @@
 package metier;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.io.FileWriter;
 
 public class GestionaireContact {
@@ -72,12 +74,28 @@ public class GestionaireContact {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier))){
             for(Contact contact: contacts) {
                 
-                writer.write(contact.toString());
+                writer.write(contact.toString()+",");
                 writer.newLine();
             }
-            System.out.print("Contacts sauvegardés dans "+nomFichier);
+            System.out.print("Contacts sauvegardés dans "+nomFichier+"\n");
         } catch (Exception e) {
             System.out.print("Erreur lors de la sauvegarde : "+e.getMessage());
         }
+    }
+
+    public void chargerContacts(String nomFichier) {
+        System.out.println("\n" + "Les Contacts sauvardées dans le fichier "+nomFichier +"\n");
+       try {
+         File file = new File(nomFichier);
+
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            System.out.println(line.toString()+"/n");
+        }
+        scanner.close();
+       } catch (Exception e) {
+              System.out.println("Erreur lors du chargement: "+e.getMessage());
+       }
     }
 }
