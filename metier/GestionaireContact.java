@@ -1,7 +1,9 @@
 package metier;
 
+import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.io.FileWriter;
 
 public class GestionaireContact {
     private ArrayList<Contact> contacts = new ArrayList<Contact>();
@@ -48,7 +50,6 @@ public class GestionaireContact {
                 }
                 System.out.println("Contact: modifié");
             } else {
-
                 System.out.println("Contact: " + nomActuel + " Nom trouver");
             }
         }
@@ -65,5 +66,18 @@ public class GestionaireContact {
             }
         }
         System.out.println("Contact: " + nom + " nom trouvé");
+    }
+
+    public void sauvegarderContacts(String nomFichier) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier))){
+            for(Contact contact: contacts) {
+                
+                writer.write(contact.toString());
+                writer.newLine();
+            }
+            System.out.print("Contacts sauvegardés dans "+nomFichier);
+        } catch (Exception e) {
+            System.out.print("Erreur lors de la sauvegarde : "+e.getMessage());
+        }
     }
 }
