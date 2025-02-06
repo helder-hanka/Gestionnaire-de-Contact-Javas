@@ -16,18 +16,25 @@ public class GestionaireContact {
     }
 
     public void afficherContacts(){
+        if (contacts.isEmpty()) {
+            System.out.println("Aucun contact trouvé");
+            return;
+        }
         for(Contact contact: contacts){
             System.out.println(contact.toString());
         }
     }
 
-    public String rechercheContact(String nom){
+    public void rechercheContact(String nom){
+        System.out.println("Recherchecontact: "+nom);
         for (Contact contact: contacts){
-            if(nom.equals(contact.getNom())){
-                return contact.toString();
+            if(nom.toLowerCase().equals(contact.getNom().toLowerCase())){
+                System.out.println(contact.toString());
+                return;
             }
         }
-        return "Contact: " + nom + " nom trouvé";
+        System.out.println("Contact: " + nom + " nom trouvé");
+        return ;
     }
     
     private boolean verifierCatactVide(String nom){
@@ -40,14 +47,14 @@ public class GestionaireContact {
             return;
         }
         for(Contact contact: contacts) {
-            if (nomActuel.equals(contact.getNom())) {
-                if (verifierCatactVide(nom)) {
+            if (nomActuel.toLowerCase().equals(contact.getNom().toLowerCase())) {
+                if (!nom.isEmpty()) {
                     contact.setNom(nom);
                 }
-                if (verifierCatactVide(email)) {
+                if (!email.isEmpty()) {
                     contact.setEmail(email); 
                 }
-                if (verifierCatactVide(telephone)) {
+                if (!telephone.isEmpty()) {
                     contact.setTelephone(telephone);
                 }
                 System.out.println("Contact: modifié");
@@ -73,8 +80,7 @@ public class GestionaireContact {
     public void sauvegarderContacts(String nomFichier) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier))){
             for(Contact contact: contacts) {
-                
-                writer.write(contact.toString()+",");
+                writer.write(contact.getNom()+";"+ contact.getEmail()+";"+contact.getTelephone()+",");
                 writer.newLine();
             }
             System.out.print("Contacts sauvegardés dans "+nomFichier+"\n");
@@ -84,15 +90,23 @@ public class GestionaireContact {
     }
 
     public void chargerContacts(String nomFichier) {
-        System.out.println("\n" + "Les Contacts sauvardées dans le fichier "+nomFichier +"\n");
-       try {
-         File file = new File(nomFichier);
-
-        Scanner scanner = new Scanner(file);
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            System.out.println(line.toString()+"/n");
+        File file = new File(nomFichier);
+        if (!file.exists()) {
+            System.out.print("Aucun fichier de contacts trouvé."+"\n");
+            return;
         }
+        try (Scanner scanner = new Scanner(file)) {
+
+            //contacts.clear();
+            while(scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] data = line.split(";");
+                data = line.split(",");
+                if (data.length ==3) {
+                    ajoutContact(data[0], data[1], data[2]);
+                }
+            }
+            System.out.println("\n" + "Les Contacts sauvardées dans le fichier "+nomFichier +"\n");
         scanner.close();
        } catch (Exception e) {
               System.out.println("Erreur lors du chargement: "+e.getMessage());
